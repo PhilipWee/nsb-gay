@@ -43,12 +43,20 @@ export const getWinStreak = async () => {
   const players = ["162514528","93610202","90314875","60267512","143581614"]
   const matches = []
   
-  for await (const player of players) {
-    matches.push(  await (
+  const matches = await Promise.all(
+    players.map(
+      async (player) => await (
         await fetch(`https://api.opendota.com/api/players/${player}/recentMatches`)
       ).json()
     )
-  }
+  )
+  
+//   for await (const player of players) {
+//     matches.push(  await (
+//         await fetch(`https://api.opendota.com/api/players/${player}/recentMatches`)
+//       ).json()
+//     )
+//   }
 
   // player_slot 0-127 are Radiant, 128-255 are Dire
   // radiant_win
